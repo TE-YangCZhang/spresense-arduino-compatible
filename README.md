@@ -67,3 +67,19 @@ spresense-arduino-compatible
 # Tools
 
 Import/Export, download tools instructions are documented at [tools directory].
+
+# Creating platform specific packages
+
+To create a platform specific package for installation simply type:
+
+```
+make packages           - will create packages for all platforms
+```
+
+This command will generate the following files:
+
+```
+spresense-arduino-linux.zip
+spresense-arduino-macosx.zip
+spresense-arduino-windows.zip
+```
