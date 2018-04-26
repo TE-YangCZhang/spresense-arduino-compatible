@@ -70,6 +70,19 @@ static interrupt_map_t s_irq_maps[] = {
     { PIN_SPI0_MISO,     -1, 0 },
     { PIN_I2C0_BDT,      -1, 0 },
     { PIN_I2C0_BCK,      -1, 0 },
+    { PIN_EMMC_DATA0,    -1, 0 },
+    { PIN_EMMC_DATA1,    -1, 0 },
+    { PIN_I2S0_DATA_OUT, -1, 0 },
+    { PIN_I2S0_DATA_IN,  -1, 0 },
+    { PIN_EMMC_DATA2,    -1, 0 },
+    { PIN_EMMC_DATA3,    -1, 0 },
+    { PIN_SEN_IRQ_IN,    -1, 0 },
+    { PIN_EMMC_CLK,      -1, 0 },
+    { PIN_EMMC_CMD,      -1, 0 },
+    { PIN_I2S0_LRCK,     -1, 0 },
+    { PIN_I2S0_BCK,      -1, 0 },
+    { PIN_UART2_CTS,     -1, 0 },
+    { PIN_UART2_RTS,     -1, 0 },
 };
 
 #define INTC_EN(n) (CXD56_INTC_BASE + 0x10 + (((n) >> 5) << 2))
@@ -118,7 +131,6 @@ static inline bool is_valid_mode(int mode)
 
 static int interrupt_handler(int irq, FAR void* context, FAR void *arg)
 {
-    /* Known Issue: edge trigger not right */
     //printf("handle GPIO interrupt [%d]\n", irq);
     unuse(context);
     unuse(arg);
@@ -149,11 +161,17 @@ static void attach_interrupt(int slot, void (*isr)(void), int mode)
                                    interrupt_handler);
     //printf("cxd56_gpioint_config returns [%d]\n", irq);
 
-    if (irq >= 0) {
-        s_irq_maps[slot].irq = irq;
-        s_irq_maps[slot].isr = isr;
-        cxd56_gpioint_enable(s_irq_maps[slot].pin);
+    if (irq < 0) {
+        interrupts();
+        printf("ERROR: Out of interrupt resources\n");
+        return;
     }
+
+    /* wait RTC few cycles before the interrupt is enabled for noise filter. */
+    delay(1);
+    s_irq_maps[slot].irq = irq;
+    s_irq_maps[slot].isr = isr;
+    cxd56_gpioint_enable(s_irq_maps[slot].pin);
     interrupts();
 }
 
@@ -165,7 +183,7 @@ static void detach_interrupt(int slot)
     }
 
     noInterrupts();
-    cxd56_gpioint_disable(s_irq_maps[slot].pin);
+    cxd56_gpioint_config(s_irq_maps[slot].pin, 0, NULL);
     s_irq_maps[slot].irq = -1;
     s_irq_maps[slot].isr = 0;
     interrupts();

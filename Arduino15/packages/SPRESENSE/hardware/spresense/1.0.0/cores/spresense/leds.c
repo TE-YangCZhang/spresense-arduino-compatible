@@ -22,6 +22,8 @@
 #include <arch/board/board.h>
 #include "leds.h"
 
+#ifdef TARGET_USES_PROTO3_BOARD
+// This will be deleted in the near future
 static int getChanel(int led)
 {
     int chanel = -1;
@@ -46,22 +48,28 @@ static int getChanel(int led)
     assert((chanel != (-1)));
     return chanel;
 }
+#endif
+
 void Led_On(int ledch)
 {
-    // SPD-003SC
+#ifdef TARGET_USES_PROTO3_BOARD
+    // This will be deleted in the near future
     int ch = getChanel(ledch);
     board_power_control(ch, false);
-    // SPD-003SB
+#else
     pinMode(ledch, OUTPUT);
     digitalWrite(ledch, HIGH);
+#endif
 }
 
 void Led_Off(int ledch)
 {
-    // SPD-003SC
+#ifdef TARGET_USES_PROTO3_BOARD
+    // This will be deleted in the near future
     int ch = getChanel(ledch);
     board_power_control(ch, true);
-    // SPD-003SB
+#else
     pinMode(ledch, OUTPUT);
     digitalWrite(ledch, LOW);
+#endif
 }
