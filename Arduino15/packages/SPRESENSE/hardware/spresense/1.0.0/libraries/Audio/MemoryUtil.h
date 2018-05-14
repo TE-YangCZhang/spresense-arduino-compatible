@@ -1,7 +1,7 @@
 /*
-  wl_types.h - Library for Arduino Wifi shield.
+  MemoryUtil.h - Audio include file for the Sparduino SDK
   Copyright (C) 2018 Sony Semiconductor Solutions Corp.
-  Copyright (c) 2011-2014 Arduino.  All right reserved.
+  Copyright (c) 2017 Sony Corporation  All right reserved.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -17,34 +17,31 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-/*
- * wl_types.h
- *
- *  Created on: Jul 30, 2010
- *      Author: dlafauci
- */
 
+#ifndef MemoryUtis_h
+#define MemoryUtis_h
 
-#ifndef _WL_TYPES_H_
-#define _WL_TYPES_H_
+#ifdef __cplusplus
 
-#include <inttypes.h>
+#define _POSIX
+#define USE_MEMMGR_FENCE
 
-typedef enum {
-    WL_FAILURE = -1,
-    WL_SUCCESS = 1,
-} wl_error_code_t;
+#include <memutils/memory_manager/MemHandle.h>
+#include <memutils/message/Message.h>
 
-/* Authentication modes */
-enum wl_auth_mode {
-    AUTH_MODE_INVALID,
-    AUTH_MODE_AUTO,
-    AUTH_MODE_OPEN_SYSTEM,
-    AUTH_MODE_SHARED_KEY,
-    AUTH_MODE_WPA,
-    AUTH_MODE_WPA2,
-    AUTH_MODE_WPA_PSK,
-    AUTH_MODE_WPA2_PSK
-};
+#include "memutil/msgq_id.h"
+#include "memutil/mem_layout.h"
+#include "memutil/memory_layout.h"
 
-#endif //_WL_TYPES_H_
+#define RAM_TILE_SIZE   (1024*128)
+
+using namespace MemMgrLite;
+
+/*--------------------------------------------------------------------------*/
+const PoolAttr *getPoolLayout(int layout_no);
+int initMemoryPools(void);
+int createStaticPools(uint8_t layout_no);
+
+#endif /* __cplusplus */
+#endif /* MemoryUtis_h */
+
