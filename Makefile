@@ -9,8 +9,8 @@ OS=windows linux macosx
 packages: $(OS) clean_base
 
 $(OS): base
-	cp $(TMPDIR)$(ARCHIVE_PREFIX).zip $(ARCHIVE_PREFIX)$@.zip
-	(cd Arduino15/; zip $(ZIP_SETTINGS) ../$(ARCHIVE_PREFIX)$@  $(COMPILER_PATH)/$@/*)
+	cp $(TMPDIR)$(ARCHIVE_PREFIX).zip $(ARCHIVE_PREFIX)$@-$(RELEASE_NAME).zip
+	(cd Arduino15/; zip $(ZIP_SETTINGS) ../$(ARCHIVE_PREFIX)$@-$(RELEASE_NAME).zip  $(COMPILER_PATH)/$@/*)
 
 base:
 	(cd Arduino15/; zip $(ZIP_SETTINGS) $(TMPDIR)$(ARCHIVE_PREFIX) . -x$(COMPILER_PATH)/*)
