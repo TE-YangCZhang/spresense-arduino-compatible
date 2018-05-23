@@ -146,6 +146,13 @@ static analog_timer_info_t s_sim_timers[] __attribute__((aligned (4))) = {
     { PIN_D19, 0,   0,   0,   0,   0,   0,   0 },
     { PIN_D20, 0,   0,   0,   0,   0,   0,   0 },
     { PIN_D21, 0,   0,   0,   0,   0,   0,   0 },
+    { PIN_D22, 0,   0,   0,   0,   0,   0,   0 },
+    { PIN_D23, 0,   0,   0,   0,   0,   0,   0 },
+    { PIN_D24, 0,   0,   0,   0,   0,   0,   0 },
+    { PIN_D25, 0,   0,   0,   0,   0,   0,   0 },
+    { PIN_D26, 0,   0,   0,   0,   0,   0,   0 },
+    { PIN_D27, 0,   0,   0,   0,   0,   0,   0 },
+    { PIN_D28, 0,   0,   0,   0,   0,   0,   0 },
 };
 
 static pwm_timer_info_t s_pwm_timers[] __attribute__((aligned (4))) = {
@@ -491,8 +498,13 @@ int analogRead(uint8_t pin)
   uint16_t adjust = 0;
 
   uint8_t aidx = _PIN_OFFSET(pin);
-  if (pin < PIN_A0 || pin > PIN_A5 || s_adcs[aidx].running) {
+  if ((pin < PIN_A0) || (pin > PIN_A5)) {
     printf("ERROR: Invalid pin number [%u]\n", pin);
+    printf("pin must be specified as A0 to A5\n");
+    return 0;
+  }
+  if (s_adcs[aidx].running) {
+    printf("ERROR: Already in progress A%u\n", aidx);
     return 0;
   }
 
