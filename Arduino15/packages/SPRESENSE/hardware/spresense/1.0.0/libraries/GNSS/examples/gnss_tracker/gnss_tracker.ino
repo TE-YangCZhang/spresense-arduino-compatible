@@ -135,12 +135,12 @@ static void Led_isActive(void)
   static int state = 1;
   if (state == 1)
   {
-    Led_On(PIN_LED0);
+    ledOn(PIN_LED0);
     state = 0;
   }
   else
   {
-    Led_Off(PIN_LED0);
+    ledOff(PIN_LED0);
     state = 1;
   }
 }
@@ -154,11 +154,11 @@ static void Led_isPosfix(bool state)
 {
   if (state == 1)
   {
-    Led_On(PIN_LED1);
+    ledOn(PIN_LED1);
   }
   else
   {
-    Led_Off(PIN_LED1);
+    ledOff(PIN_LED1);
   }
 }
 
@@ -171,11 +171,11 @@ static void Led_isSdAccess(bool state)
 {
   if (state == 1)
   {
-    Led_On(PIN_LED2);
+    ledOn(PIN_LED2);
   }
   else
   {
-    Led_Off(PIN_LED2);
+    ledOff(PIN_LED2);
   }
 }
 
@@ -188,11 +188,11 @@ static void Led_isError(bool state)
 {
   if (state == 1)
   {
-    Led_On(PIN_LED3);
+    ledOn(PIN_LED3);
   }
   else
   {
-    Led_Off(PIN_LED3);
+    ledOff(PIN_LED3);
   }
 }
 
@@ -573,7 +573,7 @@ static void SleepIn(void)
 {
   /* Turn off the LED. */
   APP_PRINT("Sleep ");
-  Led_Off(PIN_LED0);
+  ledOff(PIN_LED0);
   Gnss.stop();
   Gnss.end();
 
@@ -747,10 +747,10 @@ void setup()
   sleep(3);
 
   /* Turn on all LED:Setup start. */
-  Led_On(PIN_LED0);
-  Led_On(PIN_LED1);
-  Led_On(PIN_LED2);
-  Led_On(PIN_LED3);
+  ledOn(PIN_LED0);
+  ledOn(PIN_LED1);
+  ledOn(PIN_LED2);
+  ledOn(PIN_LED3);
 
   /* Read key input. */
   KeyRead[0] = Serial.read();
@@ -777,10 +777,10 @@ void setup()
   SetActiveSec = INITIAL_ACTIVE_TIME;
 
   /* Turn off all LED:Setup done. */
-  Led_Off(PIN_LED0);
-  Led_Off(PIN_LED1);
-  Led_Off(PIN_LED2);
-  Led_Off(PIN_LED3);
+  ledOff(PIN_LED0);
+  ledOff(PIN_LED1);
+  ledOff(PIN_LED2);
+  ledOff(PIN_LED3);
 
   /* Set error LED. */
   if (error_flag == 1)
