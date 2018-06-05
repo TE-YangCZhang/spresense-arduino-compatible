@@ -6,7 +6,7 @@ if [ $# != 1 ]; then
 	echo "Usage: $0 <SDK_TOPDIR>"
 	echo ""
 	echo "Example:"
-	echo "$0 your/path/to/spritzer"
+	echo "$1 your/path/to/spresense"
 	echo ""
 	exit 1
 fi
@@ -30,6 +30,25 @@ sh sdk/tools/mkversion.sh && mv .version nuttx/.version
 
 # create sdk-export.zip
 cd $SDK_DIR/sdk
+
+## clean
+echo "Clean SDK objects..."
+make distcleankernel &>/dev/null
+make cleankernel &>/dev/null
+make distclean &>/dev/null
+
+## Configuration
+echo "Configure SDK components..."
+echo "Kernel : ${SDL_KERNEL_CONF}"
+echo "SDK    : ${SDK_CONFIG}"
+./tools/config.py --kernel ${SDL_KERNEL_CONF}
+./tools/config.py ${SDK_CONFIG}
+
+## Build kernel
+echo "Build kernel..."
+make buildkernel &>/dev/null
+
+echo "Export to Arduino..."
 make export >/dev/null
 if [ $? != 0 ]; then
 	echo "make export failed"
@@ -40,9 +59,9 @@ unzip $PACKAGE_NAME -d $TMP_DIR >/dev/null
 rm $PACKAGE_NAME
 
 # create sdk directory
-mkdir -p $TMP_DIR/sdk/${SDK_VERSION}/${VARIANT_NAME}
+mkdir -p $TMP_DIR/sdk/${SDK_VERSION}/${VARIANT_NAME}/${SDL_KERNEL_CONF}
 
-cd $TMP_DIR/sdk/${SDK_VERSION}/${VARIANT_NAME}
+cd $TMP_DIR/sdk/${SDK_VERSION}/${VARIANT_NAME}/${SDL_KERNEL_CONF}
 
 # create arch, include, startup
 mv $TMP_DIR/${NUTTX_EXPORT}/nuttx/* .
@@ -56,9 +75,8 @@ mv $TMP_DIR/${NUTTX_EXPORT}/sdk/libs/* ./libs
 mv ./libs/libsdk.a ./libs/libnuttx.a
 
 # create debug, release
-mkdir -p debug release
-cp -a build libs release
-cp -a build libs debug
+mkdir -p prebuilt
+cp -a build libs prebuilt
 rm -rf build libs
 
 cd $TMP_DIR
