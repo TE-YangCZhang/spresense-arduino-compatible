@@ -59,7 +59,7 @@ err_t OutputMixer::create(void)
 
   /* Create renderer feature. */
 
-  AsActRendererParam_t renderer_act_param;
+  AsCreateRendererParam_t renderer_act_param;
 
   renderer_act_param.msgq_id.dev0_req  = MSGQ_AUD_RND_PLY;
   renderer_act_param.msgq_id.dev0_sync = MSGQ_AUD_RND_PLY_SYNC;
@@ -85,7 +85,7 @@ err_t OutputMixer::activate(AsOutputMixerHandle handle, OutputMixerCallback omcb
   mixer_act.mixer_type    = MainOnly;
   mixer_act.cb            = omcb;
 
-  AS_ActivateOutputMixer(handle, mixer_act);
+  AS_ActivateOutputMixer(handle, &mixer_act);
 
   return OUTPUTMIXER_ECODE_OK;
 }
@@ -101,7 +101,7 @@ err_t OutputMixer::sendData(AsOutputMixerHandle handle,
   data.callback = pcmdone_cb;
   data.pcm      = pcm;
 
-  AS_SendDataOutputMixer(data);
+  AS_SendDataOutputMixer(&data);
 
   return OUTPUTMIXER_ECODE_OK;
 }
@@ -111,7 +111,7 @@ err_t OutputMixer::deactivate(AsOutputMixerHandle handle)
 {
   AsDeactivateOutputMixer mixer_deact;
 
-  AS_DeactivateOutputMixer(handle, mixer_deact);
+  AS_DeactivateOutputMixer(handle, &mixer_deact);
 
   return OUTPUTMIXER_ECODE_OK;
 }

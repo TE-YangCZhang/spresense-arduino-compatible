@@ -35,6 +35,7 @@
  */
 #ifdef __cplusplus
 
+#include <sdk/config.h>
 #include <nuttx/config.h>
 #include <nuttx/spi/spi.h>
 #include <Arduino.h>
@@ -254,7 +255,7 @@ extern SPIClass SPI;
 #endif
 
 #else
-#error Please enable SPI4 and SPI_EXCHANGE in Nuttx
+#error Please enable SPI4 and SPI_EXCHANGE in NuttX
 #endif
 
 #if defined(CONFIG_CXD56_SPI5) && defined(CONFIG_SPI_EXCHANGE)
