@@ -1,22 +1,30 @@
 /*
-  SPI.cpp - SPI implement file for the Sparduino SDK
-  Copyright (C) 2018 Sony Semiconductor Solutions Corp.
-  Copyright (c) 2017 Sony Corporation  All right reserved.
+ *  SPI.cpp - SPRESENSE Arduino SPI library 
+ *  Copyright 2018 Sony Semiconductor Solutions Corporation
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+/**
+ * @file SPI.cpp
+ * @author Sony Corporation
+ * @brief SPRESENSE Arduino SPI library 
+ * 
+ * @details It is a library for communicating with SPI devices, with the 
+ *          SPRESENSE as the master device. 
+ */
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -29,22 +37,22 @@
 #include <cxd56_clock.h>
 #include "wiring_private.h"
 
-#define IS_INCLUDED_BY_SPI_CPP
+#define IS_INCLUDED_BY_SPI_CPP  /**< Included by SPI CPP */ 
 #include "SPI.h"
 
-#define SPIDEV_SPRESENSE  (SPIDEV_USER(0))
-#define SPIDEV_PORT_4     (4) // SPI4
-#define SPIDEV_PORT_5     (5) // SPI5
+#define SPIDEV_SPRESENSE  (SPIDEV_USER(0))  /**< Identifies the device to select */ 
+#define SPIDEV_PORT_4     (4)               /**< SPI4 */ 
+#define SPIDEV_PORT_5     (5)               /**< SPI5 */ 
 
-#define SPI_INT_BASE      (CXD56_IRQ_EXDEVICE_0)
-#define SPI_INT_MAX       (CXD56_IRQ_EXDEVICE_0 + 12)
+#define SPI_INT_BASE      (CXD56_IRQ_EXDEVICE_0)       /**< SPI base interrupt number */
+#define SPI_INT_MAX       (CXD56_IRQ_EXDEVICE_0 + 12)  /**< SPI max interrupt number */
 
-#define PINCONF_SPI4_MISO PINCONF(PIN_SPI4_MISO,      1, 1, 0, 0)
-#define PINCONF_SPI4_MOSI PINCONF(PIN_SPI4_MOSI,      1, 0, 1, 0)
-#define PINCONF_SPI4_SCK  PINCONF(PIN_SPI4_SCK,       1, 0, 0, 0)
-#define PINCONF_SPI4_CS_X PINCONF(PIN_SPI4_CS_X,      1, 0, 0, 0)
+#define PINCONF_SPI4_MISO PINCONF(PIN_SPI4_MISO,      1, 1, 0, 0)  /**< SPI pin MISO configuration */
+#define PINCONF_SPI4_MOSI PINCONF(PIN_SPI4_MOSI,      1, 0, 1, 0)  /**< SPI pin MOSI configuration */
+#define PINCONF_SPI4_SCK  PINCONF(PIN_SPI4_SCK,       1, 0, 0, 0)  /**< SPI pin SCK configuration */
+#define PINCONF_SPI4_CS_X PINCONF(PIN_SPI4_CS_X,      1, 0, 0, 0)  /**< SPI pin CS configuration */
 #define PINCONFS_SPI4     { PINCONF_SPI4_CS_X, PINCONF_SPI4_SCK, \
-                            PINCONF_SPI4_MOSI, PINCONF_SPI4_MISO }
+                            PINCONF_SPI4_MOSI, PINCONF_SPI4_MISO } /**< SPI pins configuration */
 
 #ifdef CONFIG_CXD56_SPI4
 SPIClass SPI4(SPIDEV_PORT_4);
@@ -57,7 +65,9 @@ extern SPIClass SPI __attribute__((alias("SPI4")));
 SPIClass SPI5(SPIDEV_PORT_5);
 #endif
 
-
+/**
+ * @brief Reverse bits.
+ */
 static inline uint8_t reverse_bits(uint8_t data) inline_function;
 static inline uint8_t reverse_bits(uint8_t data)
 {
@@ -65,8 +75,8 @@ static inline uint8_t reverse_bits(uint8_t data)
             ((data & 0x10) << 3) | ((data & 0x20) << 2) | ((data & 0x40) << 1) | (data & 0x80));
 }
 
-#define lsb2msb(d)  reverse_bits(d)
-#define msb2lsb(d)  reverse_bits(d)
+#define lsb2msb(d)  reverse_bits(d) /**< Reverse bits (LSB to MSB). */
+#define msb2lsb(d)  reverse_bits(d) /**< Reverse bits (MSB to LSB). */
 
 SPIClass::SPIClass(int port)
 :spi_port(port),
