@@ -29,6 +29,7 @@
 #include <stdbool.h>
 #include <nuttx/config.h>
 #include <nuttx/i2c/i2c_master.h>
+#include <sdk/config.h>
 #include "Stream.h"
 
 // I2C frequence supported
@@ -113,7 +114,7 @@ private:
 #ifdef CONFIG_CXD56_I2C0
 extern TwoWire Wire;
 #else
-#error Please enable I2C0 in Nuttx
+#error Please enable I2C0 in NuttX
 #endif
 
 #endif //__cplusplus

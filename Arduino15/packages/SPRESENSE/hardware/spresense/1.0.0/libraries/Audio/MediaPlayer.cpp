@@ -1,22 +1,21 @@
 /*
-  MediaPlayer.cpp - SPI implement file for the Sparduino SDK
-  Copyright (C) 2018 Sony Semiconductor Solutions Corp.
-  Copyright (c) 2017 Sony Corporation  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ *  MediaPlayer.cpp - SPI implement file for the SPRESENSE SDK
+ *  Copyright 2018 Sony Semiconductor Solutions Corporation
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 //***************************************************************************
 // Included Files
@@ -125,11 +124,11 @@ err_t MediaPlayer::activate(PlayerId id, uint8_t output_device, MediaPlayerCallb
 
   if (id == Player0)
     {
-      AS_ActivatePlayer(AS_PLAYER_ID_0, player_act);
+      AS_ActivatePlayer(AS_PLAYER_ID_0, &player_act);
     }
   else
     {
-      AS_ActivatePlayer(AS_PLAYER_ID_1, player_act);
+      AS_ActivatePlayer(AS_PLAYER_ID_1, &player_act);
     }
 
   return MEDIAPLAYER_ECODE_OK;
@@ -152,11 +151,11 @@ err_t MediaPlayer::init(PlayerId id,
 
   if (id == Player0)
     {
-      AS_InitPlayer(AS_PLAYER_ID_0, player_init);
+      AS_InitPlayer(AS_PLAYER_ID_0, &player_init);
     }
   else
     {
-      AS_InitPlayer(AS_PLAYER_ID_1, player_init);
+      AS_InitPlayer(AS_PLAYER_ID_1, &player_init);
     }
 
   return MEDIAPLAYER_ECODE_OK;
@@ -174,11 +173,11 @@ err_t MediaPlayer::start(PlayerId id, DecodeDoneCallback dccb)
 
   if (id == Player0)
     {
-      AS_PlayPlayer(AS_PLAYER_ID_0, player_play);
+      AS_PlayPlayer(AS_PLAYER_ID_0, &player_play);
     }
   else
     {
-      AS_PlayPlayer(AS_PLAYER_ID_1, player_play);
+      AS_PlayPlayer(AS_PLAYER_ID_1, &player_play);
     }
 
   return MEDIAPLAYER_ECODE_OK;
@@ -193,11 +192,11 @@ err_t MediaPlayer::stop(PlayerId id)
 
   if (id == Player0)
     {
-      AS_StopPlayer(AS_PLAYER_ID_0, player_stop);
+      AS_StopPlayer(AS_PLAYER_ID_0, &player_stop);
     }
   else
     {
-      AS_StopPlayer(AS_PLAYER_ID_1, player_stop);
+      AS_StopPlayer(AS_PLAYER_ID_1, &player_stop);
     }
 
   return MEDIAPLAYER_ECODE_OK;
@@ -212,11 +211,11 @@ err_t MediaPlayer::reqNextProcess(PlayerId id, AsRequestNextType type)
 
   if (id == Player0)
     {
-      AS_RequestNextPlayerProcess(AS_PLAYER_ID_0, next);
+      AS_RequestNextPlayerProcess(AS_PLAYER_ID_0, &next);
     }
   else
     {
-      AS_RequestNextPlayerProcess(AS_PLAYER_ID_1, next);
+      AS_RequestNextPlayerProcess(AS_PLAYER_ID_1, &next);
     }
 
   return MEDIAPLAYER_ECODE_OK;
@@ -229,11 +228,11 @@ err_t MediaPlayer::deactivate(PlayerId id)
 
   if (id == Player0)
     {
-      AS_DeactivatePlayer(AS_PLAYER_ID_0, player_deact);
+      AS_DeactivatePlayer(AS_PLAYER_ID_0, &player_deact);
     }
   else
     {
-      AS_DeactivatePlayer(AS_PLAYER_ID_1, player_deact);
+      AS_DeactivatePlayer(AS_PLAYER_ID_1, &player_deact);
     }
 
   return MEDIAPLAYER_ECODE_OK;

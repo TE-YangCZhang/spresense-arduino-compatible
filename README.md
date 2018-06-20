@@ -40,7 +40,7 @@ spresense-arduino-compatible
 |   |       |-- spresense-tools      - SPRESENSE tools
 |   |       |   `-- 1.0.0
 |   |       |-- spresense-sdk        - SPRESENSE SDK prebuilt binaries
-|   |       |   `-- 2.2
+|   |       |   `-- 1.0.0
 |   |       `-- gcc-arm-none-eabi    - GCC compiler
 |   |           `-- 5.4.1
 |   `-- package_spresense_index.json - Arduino IDE configuration json file

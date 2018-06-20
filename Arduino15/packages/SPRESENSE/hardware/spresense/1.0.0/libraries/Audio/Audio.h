@@ -1,22 +1,21 @@
 /*
-  Audio.h - Audio include file for the Sparduino SDK
-  Copyright (C) 2018 Sony Semiconductor Solutions Corp.
-  Copyright (c) 2017 Sony Corporation  All right reserved.
-
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
-
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-  Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+ *  Audio.h - Audio include file for the SPRESENSE SDK
+ *  Copyright 2018 Sony Semiconductor Solutions Corporation
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 /**
  * Audio Library for Arduino IDE on SPRESENSE.
@@ -247,7 +246,7 @@ public:
   err_t initPlayer(
       PlayerId id,    /**< Select Player ID. */
       uint8_t codec,  /**< Select compression code. AS_CODECTYPE_MP3 or AS_CODECTYPE_WAV */
-      const char *codec_path,  /**< Set DPS Binary path. Maximum length is 24 bytes.*/
+      const char *codec_path,  /**< Set DSP Binary path. Maximum length is 24 bytes.*/
       uint32_t fs,    /**< Set sampling rate. AS_SAMPLINGRATE_XXXXX. */
       uint8_t channel /**< Set channnel number. AS_CHANNEL_MONO or AS_CHANNEL_STEREO */
   );
@@ -267,7 +266,7 @@ public:
    */
   err_t initRecorder(
       uint8_t codec,  /**< Select compression code. AS_CODECTYPE_MP3 or AS_CODECTYPE_WAV */
-      const char *codec_path, /**< Set DPS Binary path. Maximum length is 24 bytes.*/
+      const char *codec_path, /**< Set DSP Binary path. Maximum length is 24 bytes.*/
       uint32_t fs,    /**<Set sampling rate. AS_SAMPLINGRATE_XXXXX. */
       uint8_t channel /**< Set channnel number. AS_CHANNEL_MONO, AS_CHANNEL_STEREO, AS_CHANNEL_4CH, or etc...  */
   );
@@ -478,7 +477,6 @@ private:
   uint32_t m_player0_simple_fifo_buf[SIMPLE_FIFO_BUF_SIZE/sizeof(uint32_t)];
   uint32_t m_player1_simple_fifo_buf[SIMPLE_FIFO_BUF_SIZE/sizeof(uint32_t)];
 
-  /* TODO: AsPlayerInputDeviceHdlrForRAM?  RAMを削除、これに付随した、EMMC削除、union削除 */
   AsPlayerInputDeviceHdlrForRAM m_player0_input_device_handler;
   AsPlayerInputDeviceHdlrForRAM m_player1_input_device_handler;
 
