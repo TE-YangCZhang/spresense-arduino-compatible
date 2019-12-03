@@ -527,7 +527,7 @@ void SpGnss::getNavData(SpNavData *pNavData)
         PRINT_E("SpGnss E: Failed to read position data\n");
     }
     else
-    {
+    {// printf("%5.7lf,%5.7lf\r\n",pPosdat->receiver.latitude,pPosdat->receiver.longitude);
         /* Copy to Navidata. */
         NavData.time.year   = pPosdat->receiver.date.year;
         NavData.time.month  = pPosdat->receiver.date.month;
@@ -716,6 +716,33 @@ int SpGnss::setInterval(long interval)
 
       setdata.mode     = 1;
       setdata.cycle    = interval * 1000;
+
+    /* Call ioctl. */
+
+    ret = ioctl(fd_, CXD56_GNSS_IOCTL_SET_OPE_MODE, (unsigned long)&setdata);
+    if (ret < OK)
+    {
+        PRINT_E("SpGnss E: Failed to set Interval\n");
+    }
+
+    return ret;
+}
+
+/**
+ * @brief Set the pos interval time
+ * @details Set interval of POS operation.
+ * @param [in] Interval time[msec]
+ * @return 0 if success, -1 if failure
+ */
+int SpGnss::setIntervalMsec(long interval)
+{
+    int ret;
+    struct cxd56_gnss_ope_mode_param_s setdata;
+
+    /* Set parameter. */
+
+      setdata.mode     = 1;
+      setdata.cycle    = interval;
 
     /* Call ioctl. */
 

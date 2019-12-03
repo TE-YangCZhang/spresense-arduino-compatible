@@ -188,6 +188,7 @@ void SoftwareSerial::recv()
   else 
   {
     _buffer_overflow = true;
+    printf("aws==========================_buffer_overflow=true\r\n");
   }
 }
 

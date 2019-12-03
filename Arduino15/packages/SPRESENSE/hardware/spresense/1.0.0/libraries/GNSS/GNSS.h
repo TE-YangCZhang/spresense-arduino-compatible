@@ -313,6 +313,14 @@ public:
     int setInterval(long interval = 1);
 
     /**
+     * @brief Set the pos interval time
+     * @details Set interval of POS operation.
+     * @param [in] Interval time[msec]
+     * @return 0 if success, -1 if failure
+     */
+    int setIntervalMsec(long interval = 1000);
+
+    /**
      * @brief Returns whether GPS is used as satellite system
      * @details Make sure GPS is used for the satellite system used for positioning.
      * @return 1 use, 0 unuse

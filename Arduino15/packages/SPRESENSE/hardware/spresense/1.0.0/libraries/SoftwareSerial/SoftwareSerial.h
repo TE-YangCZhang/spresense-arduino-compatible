@@ -25,7 +25,7 @@
 ******************************************************************************/
 
 #ifndef SS_MAX_RX_BUFF
-#define SS_MAX_RX_BUFF 64 // RX buffer size
+#define SS_MAX_RX_BUFF 10240 // RX buffer size
 #endif
 
 class SoftwareSerial : public Stream

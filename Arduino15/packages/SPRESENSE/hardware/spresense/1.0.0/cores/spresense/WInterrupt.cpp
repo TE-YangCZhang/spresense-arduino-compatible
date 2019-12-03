@@ -38,9 +38,19 @@
 # error Please enable GPIO interrupt support in NuttX
 #endif // CONFIG_CXD56_GPIO_IRQ
 
+#define _CONN(a, b) a##b
+#define CONN(a, b) _CONN(a, b)
+
+#define DEF_CB_NAME(PIN) CONN(callback, PIN)
+#define DEF_CB_FUNC(PIN) \
+  extern "C" void DEF_CB_FUNC(void) { \
+  }
+
 static irqstate_t s_irq_flags;
 
 #define INTC_EN(n) (CXD56_INTC_BASE + 0x10 + (((n) >> 5) << 2))
+
+DEF_CB_FUNC(1)
 
 static bool irq_enabled(int irq)
 {
